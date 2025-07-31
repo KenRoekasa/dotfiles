@@ -42,5 +42,4 @@ export DSL_BIND_IP="127.0.0.7"
 
 
 source ~/Documents/arbareus/bb.autocomplete
-. "$HOME/.cargo/env"
 
