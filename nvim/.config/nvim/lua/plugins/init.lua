@@ -154,5 +154,8 @@ return {
       vim.keymap.set("n", "<leader>dss", dap.session, { desc = "DAP: Show Session" })
     end,
   },
+  {
+	 "github/copilot.vim"
+  }
 }
 
