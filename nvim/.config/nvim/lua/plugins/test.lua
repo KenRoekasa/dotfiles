@@ -13,7 +13,6 @@ return {
     config = function()
       require("neotest").setup({
         adapters = {
-          require("neotest-gtest").setup({}),
           require("neotest-ctest").setup({
             root = function(dir)
               return require("neotest.lib").files.match_root_pattern(
@@ -24,16 +23,14 @@ return {
                 ".clang-tidy",
                 "build",
                 "out",
-                ".git"
+                ".git",
+		"cmake-build-debug"
               )(dir)
             end,
-            is_test_file = function(file)
-              local is_cpp = file.ext == ".cpp" or file.ext == ".cc" or file.ext == ".cxx"
-              local has_test_in_name = string.find(file.stem, "Test") ~= nil
-              return is_cpp and has_test_in_name
-            end,
+	    is_test_file = function(file)
+		return string.find(file, "Test") ~= nil
+	    end,
             frameworks = { "gtest", "catch2", "doctest", "cpputest"},
-
           })
         }
       })

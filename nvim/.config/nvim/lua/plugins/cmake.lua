@@ -1,1 +1,3 @@
-return { 'Civitasv/cmake-tools.nvim', opts = {} }
+return { 'Civitasv/cmake-tools.nvim',
+  ft = { "c", "cpp", "objc", "objcpp" },
+  opts = {} }
