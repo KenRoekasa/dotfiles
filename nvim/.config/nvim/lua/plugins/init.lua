@@ -40,35 +40,35 @@ return {
 
   -- LSPConfig setup
   {
-    "neovim/nvim-lspconfig",
-    lazy = false,
-    config = function()
-      local lspconfig = require("lspconfig")
-      local capabilities = require("cmp_nvim_lsp").default_capabilities()
+	  "neovim/nvim-lspconfig",
+	  lazy = false,
+	  config = function()
+		  local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-      local on_attach = function(_, bufnr)
-        local buf_map = function(mode, lhs, rhs, desc)
-          vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, desc = desc })
-        end
-        buf_map("n", "gD", vim.lsp.buf.declaration, "Go to Declaration")
-        buf_map("n", "gd", vim.lsp.buf.definition, "Go to Definition")
-        buf_map("n", "K", vim.lsp.buf.hover, "Hover Documentation")
-        buf_map("n", "gi", vim.lsp.buf.implementation, "Go to Implementation")
-        buf_map("n", "gr", vim.lsp.buf.references, "Find References")
-        buf_map("n", "<leader>rn", vim.lsp.buf.rename, "Rename Symbol")
-        buf_map("n", "<leader>ca", vim.lsp.buf.code_action, "Code Action")
-      end
+		  local on_attach = function(_, bufnr)
+			  local buf_map = function(mode, lhs, rhs, desc)
+				  vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, desc = desc })
+			  end
+			  buf_map("n", "gD", vim.lsp.buf.declaration, "Go to Declaration")
+			  buf_map("n", "gd", vim.lsp.buf.definition, "Go to Definition")
+			  buf_map("n", "K", vim.lsp.buf.hover, "Hover Documentation")
+			  buf_map("n", "gi", vim.lsp.buf.implementation, "Go to Implementation")
+			  buf_map("n", "gr", vim.lsp.buf.references, "Find References")
+			  buf_map("n", "<leader>rn", vim.lsp.buf.rename, "Rename Symbol")
+			  buf_map("n", "<leader>ca", vim.lsp.buf.code_action, "Code Action")
+		  end
 
-      -- Register language servers
-      lspconfig.clangd.setup({ on_attach = on_attach, capabilities = capabilities })
-      lspconfig.pyright.setup({ on_attach = on_attach, capabilities = capabilities })
-      lspconfig.cmake.setup({ on_attach = on_attach, capabilities = capabilities })
+		  -- Register language servers
+		  vim.lsp.enable({ "clangd", "pyright", "cmake", "ts_ls" })
 
-      lspconfig.ts_ls.setup({
-	      on_attach = on_attach,
-	      capabilities = capabilities,
-      })
-    end,
+		  vim.api.nvim_create_autocmd("LspAttach", {
+			  callback = function(args)
+				  local client = vim.lsp.get_client_by_id(args.data.client_id)
+				  on_attach(client, args.buf)
+			  end,
+		  })
+
+	  end,
   },
 
 
