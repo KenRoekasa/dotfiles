@@ -10,31 +10,51 @@ return {
       "nvim-treesitter/nvim-treesitter",
       "orjangj/neotest-ctest", -- Required for CTest/CMake
     },
+    keys = {
+      { "<leader>tt", function() require("neotest").run.run() end, desc = "Run nearest test" },
+      { "<leader>tf", function() require("neotest").run.run(vim.fn.expand("%")) end, desc = "Run file tests" },
+      { "<leader>ts", function() require("neotest").summary.toggle() end, desc = "Toggle test summary" },
+      { "<leader>to", function() require("neotest").output.open({ enter = true }) end, desc = "Show test output" },
+      { "<leader>tO", function() require("neotest").output_panel.toggle() end, desc = "Toggle output panel" },
+      { "<leader>tS", function() require("neotest").run.stop() end, desc = "Stop test" },
+    },
     -- Configuration function
     config = function()
-      -- Define the simplest root detection: checks for a CMakeLists file or a Git repo
       local ctest_root_pattern = require("neotest.lib").files.match_root_pattern(
-        "CMakeLists.txt",          -- The most definitive marker for a CMake project root
-        "compile_commands.json",   -- Another strong CMake/LSP marker
-        ".git"                     -- The Git repository root
+        "CMakePresets.json",
+        "compile_commands.json",
+        ".git"
       )
 
       require("neotest").setup({
-        -- The neotest-ctest adapter is used to handle all CTest-driven frameworks like Catch2
         adapters = {
           require("neotest-ctest").setup({
-            build_dir_name = "cmake-build-debug", -- Must match your actual build folder name
-
             root = function(dir)
               return ctest_root_pattern(dir)
             end,
 
-            -- Simplifies the test file check to be case-insensitive (checks for "test" anywhere in the filename)
-            is_test_file = function(file)
-              return string.find(string.lower(file), "test") ~= nil
+            is_test_file = function(file_path)
+              local supported = { cpp = true, cc = true, cxx = true }
+              local ext = file_path:match("%.(%w+)$")
+              if not ext or not supported[ext] then
+                return false
+              end
+              local name = file_path:match("([^/]+)%.[^.]+$"):lower()
+              return name:find("test") ~= nil
             end,
 
-            -- Explicitly specify Catch2 (and others) so CTest knows what to look for
+            filter_dir = function(name)
+              local exclude = {
+                build = true, bin = true, lib = true, out = true,
+                cmake = true, CMakeFiles = true, Testing = true,
+                doc = true, docs = true, examples = true,
+                scripts = true, tools = true, venv = true,
+                ["cmake-build-debug"] = true, ["flutter_app"] = true,
+                ["_deps"] = true,
+              }
+              return not exclude[name]
+            end,
+
             frameworks = { "catch2", "gtest", "doctest" },
           }),
         },
