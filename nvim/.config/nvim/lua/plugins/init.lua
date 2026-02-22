@@ -56,10 +56,25 @@ return {
 			  buf_map("n", "gr", vim.lsp.buf.references, "Find References")
 			  buf_map("n", "<leader>rn", vim.lsp.buf.rename, "Rename Symbol")
 			  buf_map("n", "<leader>ca", vim.lsp.buf.code_action, "Code Action")
+
+			  -- Call hierarchy
+			  buf_map("n", "<leader>ci", vim.lsp.buf.incoming_calls, "Incoming Calls")
+			  buf_map("n", "<leader>co", vim.lsp.buf.outgoing_calls, "Outgoing Calls")
+
+			  -- Type definition
+			  buf_map("n", "<leader>ct", vim.lsp.buf.type_definition, "Type Definition")
+
+			  -- Signature help
+			  buf_map("n", "<C-k>", vim.lsp.buf.signature_help, "Signature Help")
+			  buf_map("i", "<C-k>", vim.lsp.buf.signature_help, "Signature Help")
+
+			  -- Telescope symbol search
+			  buf_map("n", "<leader>ss", "<cmd>Telescope lsp_workspace_symbols<cr>", "Workspace Symbols")
+			  buf_map("n", "<leader>sd", "<cmd>Telescope lsp_document_symbols<cr>", "Document Symbols")
 		  end
 
 		  -- Register language servers
-		  vim.lsp.enable({ "clangd", "pyright", "cmake", "ts_ls" })
+		  vim.lsp.enable({ "clangd", "pyright", "cmake" })
 
 		  vim.api.nvim_create_autocmd("LspAttach", {
 			  callback = function(args)
@@ -71,6 +86,16 @@ return {
 	  end,
   },
 
+
+  -- Treesitter parsers
+  {
+    "nvim-treesitter/nvim-treesitter",
+    build = ":TSUpdate",
+    opts = {
+      ensure_installed = { "c", "cpp", "lua", "cmake", "python" },
+      auto_install = true,
+    },
+  },
 
   -- Header/source switch
   {
@@ -118,8 +143,8 @@ return {
       dap.listeners.before.event_terminated["dapui_config"] = function() dapui.close() end
       dap.listeners.before.event_exited["dapui_config"] = function() dapui.close() end
 
-      dap.adapters.cppdbg = {
-        id = "cppdbg",
+      -- CodeLLDB adapter
+      dap.adapters.codelldb = {
         type = "server",
         port = "${port}",
         executable = {
@@ -128,10 +153,17 @@ return {
         },
       }
 
+      -- GDB adapter (native)
+      dap.adapters.gdb = {
+        type = "executable",
+        command = "gdb",
+        args = { "--interpreter=dap", "--eval-command", "set print pretty on" },
+      }
+
       dap.configurations.cpp = {
         {
-          name = "Launch",
-          type = "cppdbg",
+          name = "Launch (CodeLLDB)",
+          type = "codelldb",
           request = "launch",
           program = function()
             return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
@@ -139,7 +171,20 @@ return {
           cwd = "${workspaceFolder}",
           stopAtEntry = true,
         },
+        {
+          name = "Launch (GDB)",
+          type = "gdb",
+          request = "launch",
+          program = function()
+            return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+          end,
+          cwd = "${workspaceFolder}",
+          stopAtBeginningOfMainSubprogram = true,
+        },
       }
+
+      -- C files use the same debug configurations as C++
+      dap.configurations.c = dap.configurations.cpp
 
       -- Keybindings
       vim.keymap.set("n", "<F5>", dap.continue, { desc = "DAP: Continue" })
