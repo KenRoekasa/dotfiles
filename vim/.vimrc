@@ -6,4 +6,3 @@ Plug 'christoomey/vim-tmux-navigator'
 call plug#end()
 
 set incsearch
-set rnu

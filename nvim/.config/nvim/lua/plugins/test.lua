@@ -49,10 +49,18 @@ return {
                 cmake = true, CMakeFiles = true, Testing = true,
                 doc = true, docs = true, examples = true,
                 scripts = true, tools = true, venv = true,
-                ["cmake-build-debug"] = true, ["flutter_app"] = true,
-                ["_deps"] = true,
+                external_deps = true, patches = true,
+                Dockerfiles = true, Jenkinsfiles = true,
+                ["_deps"] = true, ["flutter_app"] = true,
               }
-              return not exclude[name]
+              if exclude[name] then
+                return false
+              end
+              -- Filter all cmake-build-* directories by prefix
+              if name:find("^cmake%-build%-") then
+                return false
+              end
+              return true
             end,
 
             frameworks = { "catch2", "gtest", "doctest" },
