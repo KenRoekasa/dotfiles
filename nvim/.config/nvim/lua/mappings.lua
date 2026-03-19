@@ -10,6 +10,9 @@ map("n", "<leader>e", "<cmd>NvimTreeToggle<CR>", { desc = "Toggle NvimTree" })
 map("n", "<leader>sk", "<cmd>Telescope keymaps<CR>", { desc = "Search keymaps" })
 map("n", "<leader>sa", "<cmd>Telescope commands<CR>", { desc = "Search commands" })
 
+-- Markdown
+map("n", "<leader>mr", "<cmd>RenderMarkdown toggle<CR>", { desc = "Toggle Markdown Render" })
+
 -- CMake
 map("n", "<leader>cb", "<cmd>CMakeBuild<CR>", { desc = "Build" })
 map("n", "<leader>cc", "<cmd>CMakeGenerate<CR>", { desc = "CMake generate" })

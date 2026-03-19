@@ -92,7 +92,7 @@ return {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
     opts = {
-      ensure_installed = { "c", "cpp", "lua", "cmake", "python" },
+      ensure_installed = { "c", "cpp", "lua", "cmake", "python", "markdown", "markdown_inline" },
       auto_install = true,
     },
   },
@@ -201,6 +201,44 @@ return {
   },
   {
 	 "github/copilot.vim"
-  }
+  },
+
+  -- Git UI
+  {
+    "NeogitOrg/neogit",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "sindrets/diffview.nvim",
+      "nvim-telescope/telescope.nvim",
+    },
+    config = function()
+      require("neogit").setup({
+        integrations = {
+          diffview = true,
+          telescope = true,
+        },
+      })
+      vim.keymap.set("n", "<leader>gg", "<cmd>Neogit<CR>", { desc = "Neogit Status" })
+    end,
+  },
+  {
+    "sindrets/diffview.nvim",
+    cmd = { "DiffviewOpen", "DiffviewFileHistory" },
+    config = function()
+      require("diffview").setup()
+      vim.keymap.set("n", "<leader>gd", "<cmd>DiffviewOpen<CR>", { desc = "Diffview Open" })
+      vim.keymap.set("n", "<leader>gh", "<cmd>DiffviewFileHistory %<CR>", { desc = "Diffview File History" })
+      vim.keymap.set("n", "<leader>gH", "<cmd>DiffviewFileHistory<CR>", { desc = "Diffview Branch History" })
+      vim.keymap.set("n", "<leader>gq", "<cmd>DiffviewClose<CR>", { desc = "Diffview Close" })
+    end,
+  },
+
+  -- Markdown rendering
+  {
+    "MeanderingProgrammer/render-markdown.nvim",
+    ft = { "markdown" },
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
+    opts = {},
+  },
 }
 
