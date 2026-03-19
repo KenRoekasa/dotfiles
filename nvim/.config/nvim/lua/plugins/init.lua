@@ -191,7 +191,7 @@ return {
       vim.keymap.set("n", "<F10>", dap.step_over, { desc = "DAP: Step Over" })
       vim.keymap.set("n", "<F11>", dap.step_into, { desc = "DAP: Step Into" })
       vim.keymap.set("n", "<F12>", dap.step_out, { desc = "DAP: Step Out" })
-      vim.keymap.set("n", "\b", dap.toggle_breakpoint, { desc = "DAP: Toggle Breakpoint" })
+      vim.keymap.set("n", "<leader>db", dap.toggle_breakpoint, { desc = "DAP: Toggle Breakpoint" })
       vim.keymap.set("n", "<leader>B", function()
         dap.set_breakpoint(vim.fn.input("Breakpoint condition: "))
       end, { desc = "DAP: Set Conditional Breakpoint" })
@@ -230,6 +230,31 @@ return {
       vim.keymap.set("n", "<leader>gh", "<cmd>DiffviewFileHistory %<CR>", { desc = "Diffview File History" })
       vim.keymap.set("n", "<leader>gH", "<cmd>DiffviewFileHistory<CR>", { desc = "Diffview Branch History" })
       vim.keymap.set("n", "<leader>gq", "<cmd>DiffviewClose<CR>", { desc = "Diffview Close" })
+    end,
+  },
+
+  -- Code folding
+  {
+    "kevinhwang91/nvim-ufo",
+    dependencies = { "kevinhwang91/promise-async" },
+    event = "BufRead",
+    config = function()
+      vim.o.foldcolumn = "1"
+      vim.o.foldlevel = 99
+      vim.o.foldlevelstart = 99
+      vim.o.foldenable = true
+
+      require("ufo").setup({
+        provider_selector = function()
+          return { "treesitter", "indent" }
+        end,
+      })
+
+      vim.keymap.set("n", "zR", require("ufo").openAllFolds, { desc = "Open all folds" })
+      vim.keymap.set("n", "zM", require("ufo").closeAllFolds, { desc = "Close all folds" })
+      vim.keymap.set("n", "zK", function()
+        require("ufo").peekFoldedLinesUnderCursor()
+      end, { desc = "Peek fold" })
     end,
   },
 

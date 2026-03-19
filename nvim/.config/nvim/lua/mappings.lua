@@ -13,6 +13,9 @@ map("n", "<leader>sa", "<cmd>Telescope commands<CR>", { desc = "Search commands"
 -- Markdown
 map("n", "<leader>mr", "<cmd>RenderMarkdown toggle<CR>", { desc = "Toggle Markdown Render" })
 
+-- Ctrl-click go to definition
+map("n", "<C-LeftMouse>", "<LeftMouse><cmd>lua vim.lsp.buf.definition()<CR>", { desc = "Go to Definition" })
+
 -- CMake
 map("n", "<leader>cb", "<cmd>CMakeBuild<CR>", { desc = "Build" })
 map("n", "<leader>cc", "<cmd>CMakeGenerate<CR>", { desc = "CMake generate" })
