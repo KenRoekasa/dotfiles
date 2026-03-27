@@ -33,7 +33,7 @@ return {
       })
       vim.keymap.set({ "n", "v" }, "<leader>fm", function()
         require("conform").format({ lsp_fallback = true, async = true, timeout_ms = 5000 })
-      end, { desc = "Format file or range (conform)" })
+      end, { desc = "Reformat Code" })
     end,
   },
 
@@ -49,6 +49,8 @@ return {
 			  local buf_map = function(mode, lhs, rhs, desc)
 				  vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, desc = desc })
 			  end
+
+			  -- Vim-style LSP navigation (keep as fallbacks)
 			  buf_map("n", "gD", vim.lsp.buf.declaration, "Go to Declaration")
 			  buf_map("n", "gd", vim.lsp.buf.definition, "Go to Definition")
 			  buf_map("n", "K", vim.lsp.buf.hover, "Hover Documentation")
@@ -56,6 +58,11 @@ return {
 			  buf_map("n", "gr", vim.lsp.buf.references, "Find References")
 			  buf_map("n", "<leader>rn", vim.lsp.buf.rename, "Rename Symbol")
 			  buf_map("n", "<leader>ca", vim.lsp.buf.code_action, "Code Action")
+
+			  -- CLion-inspired (GNOME Terminal compatible)
+			  buf_map("n", "<C-b>", vim.lsp.buf.definition, "Go to Definition")
+			  buf_map("n", "<A-CR>", vim.lsp.buf.code_action, "Quick Fix")
+			  buf_map("i", "<C-p>", vim.lsp.buf.signature_help, "Parameter Info")
 
 			  -- Call hierarchy
 			  buf_map("n", "<leader>ci", vim.lsp.buf.incoming_calls, "Incoming Calls")
@@ -186,17 +193,19 @@ return {
       -- C files use the same debug configurations as C++
       dap.configurations.c = dap.configurations.cpp
 
-      -- Keybindings
-      vim.keymap.set("n", "<F5>", dap.continue, { desc = "DAP: Continue" })
-      vim.keymap.set("n", "<F10>", dap.step_over, { desc = "DAP: Step Over" })
-      vim.keymap.set("n", "<F11>", dap.step_into, { desc = "DAP: Step Into" })
-      vim.keymap.set("n", "<F12>", dap.step_out, { desc = "DAP: Step Out" })
+      -- Debug keybindings (plain F-keys + leader for GNOME Terminal)
+      vim.keymap.set("n", "<F9>", dap.continue, { desc = "DAP: Resume / Start" })
+      vim.keymap.set("n", "<F7>", dap.step_into, { desc = "DAP: Step Into" })
+      vim.keymap.set("n", "<F8>", dap.step_over, { desc = "DAP: Step Over" })
+      vim.keymap.set("n", "<leader>do", dap.step_out, { desc = "DAP: Step Out" })
+      vim.keymap.set("n", "<leader>dx", dap.terminate, { desc = "DAP: Stop" })
       vim.keymap.set("n", "<leader>db", dap.toggle_breakpoint, { desc = "DAP: Toggle Breakpoint" })
-      vim.keymap.set("n", "<leader>B", function()
+      vim.keymap.set("n", "<leader>dB", function()
         dap.set_breakpoint(vim.fn.input("Breakpoint condition: "))
-      end, { desc = "DAP: Set Conditional Breakpoint" })
+      end, { desc = "DAP: Conditional Breakpoint" })
+      vim.keymap.set("n", "<leader>de", function() dapui.eval() end, { desc = "DAP: Evaluate Expression" })
+      vim.keymap.set("n", "<leader>dc", dap.run_to_cursor, { desc = "DAP: Run to Cursor" })
       vim.keymap.set("n", "<leader>dr", dap.repl.open, { desc = "DAP: Open REPL" })
-      vim.keymap.set("n", "<leader>dss", dap.session, { desc = "DAP: Show Session" })
     end,
   },
   {
@@ -237,16 +246,28 @@ return {
   {
     "kevinhwang91/nvim-ufo",
     dependencies = { "kevinhwang91/promise-async" },
-    event = "BufRead",
-    config = function()
-      vim.o.foldcolumn = "1"
+    event = "BufReadPost",
+    init = function()
       vim.o.foldlevel = 99
       vim.o.foldlevelstart = 99
-      vim.o.foldenable = true
-
+    end,
+    config = function()
       require("ufo").setup({
-        provider_selector = function()
+        provider_selector = function(_, filetype)
+          if filetype == "nvdash" or filetype == "" then
+            return ""
+          end
           return { "treesitter", "indent" }
+        end,
+      })
+
+      vim.api.nvim_create_autocmd("FileType", {
+        callback = function(args)
+          local ft = vim.bo[args.buf].filetype
+          if ft ~= "nvdash" and ft ~= "" then
+            vim.wo.foldcolumn = "1"
+            vim.wo.foldenable = true
+          end
         end,
       })
 
