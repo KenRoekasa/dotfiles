@@ -7,7 +7,7 @@ map("i", "jk", "<ESC>")
 -- ── Tool windows ─────────────────────────────────────────────────
 map("n", "<A-1>", "<cmd>NvimTreeToggle<CR>", { desc = "Project (file tree)" })
 map("n", "<A-9>", "<cmd>Neogit<CR>", { desc = "Git" })
-map("n", "<leader>tt", "<cmd>ToggleTerm<CR>", { desc = "Terminal" })
+map("n", "<leader>tm", "<cmd>ToggleTerm<CR>", { desc = "Terminal" })
 
 -- ── Navigation ───────────────────────────────────────────────────
 map("n", "<C-LeftMouse>", "<LeftMouse><cmd>lua vim.lsp.buf.definition()<CR>", { desc = "Go to Definition" })

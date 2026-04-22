@@ -139,7 +139,14 @@ return {
       },
       {
 	 "nvim-neotest/nvim-nio"
-      }
+      },
+      {
+        "jay-babu/mason-nvim-dap.nvim",
+        dependencies = { "mason-org/mason.nvim" },
+        opts = {
+          ensure_installed = { "codelldb" },
+        },
+      },
     },
     config = function()
       local dap = require("dap")
@@ -154,16 +161,18 @@ return {
       dap.adapters.codelldb = {
         type = "server",
         port = "${port}",
+        host = "127.0.0.1",
         executable = {
           command = "codelldb",
           args = { "--port", "${port}" },
         },
+        timeout = 600000,
       }
 
-      -- GDB adapter (native)
+      -- GDB adapter (CLion-bundled GDB 16.3 with DAP support)
       dap.adapters.gdb = {
         type = "executable",
-        command = "gdb",
+        command = vim.fn.expand("~/.local/share/JetBrains/Toolbox/apps/clion/bin/gdb/linux/x64/bin/gdb"),
         args = { "--interpreter=dap", "--eval-command", "set print pretty on" },
       }
 
