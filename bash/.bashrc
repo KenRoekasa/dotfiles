@@ -39,7 +39,13 @@ alias killBuild="ps faux | grep roekasak |  grep cc1 | awk {'print \$2'} | xargs
 
 
 export DSL_BIND_IP="127.0.0.7"
-
+export PATH="~/Downloads/squashfs-root/usr/bin:$PATH"
+export PATH=":$PATH:~/Downloads/lazygit_0.53.0_Linux_x86_64"
+export PATH=":$PATH:~/.nvm/versions/node/v22.18.0/bin/node"
 
 source ~/Documents/arbareus/bb.autocomplete
 
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
