@@ -19,6 +19,12 @@ map("n", "<leader>xp", function() vim.diagnostic.goto_prev() end, { desc = "Prev
 -- ── Search / Find ────────────────────────────────────────────────
 map("n", "<leader>ff", "<cmd>Telescope find_files<CR>", { desc = "Go to File" })
 map("n", "<leader>fg", "<cmd>Telescope live_grep<CR>", { desc = "Find in Path" })
+map("n", "<leader>fw", "<cmd>Telescope grep_string<CR>", { desc = "Grep word under cursor" })
+map("v", "<leader>fg", function()
+  local text = vim.getregion(vim.fn.getpos "v", vim.fn.getpos ".", { type = vim.fn.mode() })
+  local query = table.concat(text, "\n"):gsub("^%s+", ""):gsub("%s+$", "")
+  require("telescope.builtin").grep_string({ search = query })
+end, { desc = "Grep selection" })
 map("n", "<leader>fa", "<cmd>Telescope commands<CR>", { desc = "Find Action" })
 map("n", "<leader>sk", "<cmd>Telescope keymaps<CR>", { desc = "Search Keymaps" })
 
