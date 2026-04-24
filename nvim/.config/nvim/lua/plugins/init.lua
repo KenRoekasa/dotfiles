@@ -25,10 +25,11 @@ return {
     "stevearc/conform.nvim",
     event = "BufWritePre",
     config = function()
+      local clang_format = vim.fn.executable("clang-format") == 1 and { "clang_format" } or {}
       require("conform").setup({
         formatters_by_ft = {
-          c = { "clang_format" },
-          cpp = { "clang_format" },
+          c = clang_format,
+          cpp = clang_format,
         },
       })
       vim.keymap.set({ "n", "v" }, "<leader>fm", function()
@@ -259,11 +260,19 @@ return {
     end,
     config = function()
       require("ufo").setup({
+        open_fold_hl_timeout = 0,
         provider_selector = function(_, filetype)
           if filetype == "nvdash" or filetype == "" then
             return ""
           end
           return { "treesitter", "indent" }
+        end,
+      })
+
+      -- Open all folds when a buffer is opened
+      vim.api.nvim_create_autocmd("BufReadPost", {
+        callback = function()
+          require("ufo").openAllFolds()
         end,
       })
 
