@@ -112,6 +112,7 @@ return {
     config = function()
       require("ouroboros").setup({})
       vim.keymap.set("n", "<leader>o", ":Ouroboros<CR>", { desc = "Switch header/source" })
+      vim.keymap.set("n", "<F10>", ":Ouroboros<CR>", { desc = "Switch header/source" })
     end,
   },
 
@@ -217,10 +218,6 @@ return {
       vim.keymap.set("n", "<leader>dr", dap.repl.open, { desc = "DAP: Open REPL" })
     end,
   },
-  {
-	 "github/copilot.vim"
-  },
-
   -- Git UI
   {
     "NeogitOrg/neogit",

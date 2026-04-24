@@ -67,6 +67,19 @@ return {
     end,
   },
   {
+    "christoomey/vim-tmux-navigator",
+    cmd = {
+      "TmuxNavigateLeft", "TmuxNavigateDown",
+      "TmuxNavigateUp", "TmuxNavigateRight",
+    },
+    keys = {
+      { "<C-h>", "<cmd>TmuxNavigateLeft<CR>",  desc = "Navigate left (tmux/nvim)" },
+      { "<C-j>", "<cmd>TmuxNavigateDown<CR>",  desc = "Navigate down (tmux/nvim)" },
+      { "<C-k>", "<cmd>TmuxNavigateUp<CR>",    desc = "Navigate up (tmux/nvim)" },
+      { "<C-l>", "<cmd>TmuxNavigateRight<CR>", desc = "Navigate right (tmux/nvim)" },
+    },
+  },
+  {
     "nvim-pack/nvim-spectre",
     dependencies = { "nvim-lua/plenary.nvim" },
     keys = {

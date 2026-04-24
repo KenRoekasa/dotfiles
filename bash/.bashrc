@@ -20,7 +20,7 @@ export PS1
 
 # User specific aliases and functions
 alias clion='clion.sh'
-alias cd_code='cd ~/Documents/arbareus'
+alias cd_code='cd ~/arbareus'
 alias build_all='cd_code && ./bb build_all'
 alias commit_pipeline='cd_code && ./bb commit_pipeline'
 alias database='mysql -u root'
@@ -43,9 +43,11 @@ export PATH="~/Downloads/squashfs-root/usr/bin:$PATH"
 export PATH=":$PATH:~/Downloads/lazygit_0.53.0_Linux_x86_64"
 export PATH=":$PATH:~/.nvm/versions/node/v22.18.0/bin/node"
 
-source ~/Documents/arbareus/bb.autocomplete
+source ~/arbareus/bb.autocomplete
+source ~/arbareus/dev.autocomplete
 
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+. "$HOME/.cargo/env"

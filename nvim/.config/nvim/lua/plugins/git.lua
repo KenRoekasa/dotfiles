@@ -18,6 +18,34 @@ return {
       { "<leader>gH", "<cmd>DiffviewFileHistory<cr>", desc = "Branch history" },
       { "<leader>gx", "<cmd>DiffviewClose<cr>", desc = "Close diff view" },
     },
-    opts = {},
+    opts = {
+      keymaps = {
+        view = {
+          { "n", "<C-o>", function() require("diffview.actions").goto_file_edit() end, { desc = "Open source file" } },
+          { "n", "<F4>",  function() require("diffview.actions").goto_file_edit() end, { desc = "Open source file" } },
+        },
+        file_panel = {
+          { "n", "<F4>",  function() require("diffview.actions").goto_file_edit() end, { desc = "Open source file" } },
+        },
+        file_history_panel = {
+          { "n", "<C-o>", function() require("diffview.actions").open_in_diffview() end, { desc = "Open in diff" } },
+          { "n", "<F4>",  function() require("diffview.actions").open_in_diffview() end, { desc = "Open in diff" } },
+        },
+      },
+      view = {
+        diff = {
+          winbar_info = true,
+        },
+        file_history = {
+          winbar_info = true,
+        },
+      },
+      hooks = {
+        diff_buf_read = function(bufnr)
+          vim.opt_local.scrollbind = true
+          vim.opt_local.cursorbind = true
+        end,
+      },
+    },
   },
 }
