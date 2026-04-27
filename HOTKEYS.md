@@ -4,6 +4,83 @@
 
 ---
 
+## ⭐ Essential Hotkeys
+
+### WezTerm
+| Key | Action |
+|-----|--------|
+| `Ctrl+b c` | New tab |
+| `Ctrl+b %` | Split vertical |
+| `Ctrl+b "` | Split horizontal |
+| `Ctrl+b h/j/k/l` | Navigate panes |
+| `Ctrl+b z` | Zoom pane (fullscreen toggle) |
+| `Ctrl+b Space` | Rotate panes |
+
+### Navigation
+| Key | Action |
+|-----|--------|
+| `Ctrl+h/j/k/l` | Navigate nvim splits |
+| `Ctrl+b` | Go to definition |
+| `Ctrl+o` | Navigate back |
+| `Alt+Left/Right` | Navigate back/forward |
+| `F4` | Go to source file |
+| `F10` | Switch header/source |
+| `Tab / Shift+Tab` | Next/prev buffer |
+| `Space x` | Close buffer |
+| `Space fb` | List open buffers |
+
+### Search
+| Key | Action |
+|-----|--------|
+| `Space ff` | Find file |
+| `Space fg` | Live grep |
+| `Space fw` | Grep word under cursor |
+| `Space fg` (visual) | Grep selected text |
+| `Space fa` | Find action/command |
+| `Space sk` | Search keymaps |
+
+### Code
+| Key | Action |
+|-----|--------|
+| `Alt+Enter` | Code action / quick fix |
+| `K` | Hover docs |
+| `Space rn` | Rename symbol |
+| `Space fm` | Format code |
+| `F2` | Next error |
+| `Alt+j/k` | Add cursor below/above |
+| `Alt+d` | Select next occurrence |
+
+### Git
+| Key | Action |
+|-----|--------|
+| `Alt+9` | Neogit |
+| `Space gh` | File history |
+| `Space gx` | Close diffview |
+
+### Testing & Build
+| Key | Action |
+|-----|--------|
+| `Shift+F10` | Run nearest test |
+| `Ctrl+Shift+F10` | Run file tests |
+| `F9` | Start/resume debug |
+| `F8` | Step over |
+| `F7` | Step into |
+| `Space db` | Toggle breakpoint |
+| `Space cb` | CMake build |
+| `Space cr` | CMake run |
+
+### Tools
+| Key | Action |
+|-----|--------|
+| `Alt+1` | File tree |
+| `Space tm` | Terminal |
+| `Space ac` | Toggle Claude Code |
+| `Ctrl+y` | Accept Copilot suggestion |
+| `Space qs` | Restore session |
+| `Space ta` | Toggle autosave |
+
+---
+
 ## WezTerm (Leader = `Ctrl+b`)
 
 ### Panes
