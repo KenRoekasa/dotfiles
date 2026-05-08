@@ -18,6 +18,9 @@ M.ui = {
   tabufline = {
     bufwidth = 35,
   },
+  statusline = {
+    enabled = false,
+  },
 }
 
 return M
