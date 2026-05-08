@@ -2,24 +2,6 @@ return {
   -- General utilities
   { "nvim-lua/plenary.nvim", lazy = true },
 
-  -- Completion: LSP source
-  { "hrsh7th/cmp-nvim-lsp" },
-
-  -- Mason & LSP installer
-  {
-	  "mason-org/mason-lspconfig.nvim",
-	  opts = {
-      ensure_installed = {
-        "lua_ls",
-        "clangd",
-        "cmake_language_server",
-      },
-    },
-	  dependencies = {
-		  { "mason-org/mason.nvim", opts = {} },
-		  "neovim/nvim-lspconfig",
-	  },
-  },
   -- Formatter
   {
     "stevearc/conform.nvim",
@@ -36,62 +18,6 @@ return {
         require("conform").format({ lsp_fallback = true, async = true, timeout_ms = 5000 })
       end, { desc = "Reformat Code" })
     end,
-  },
-
-
-  -- LSPConfig setup
-  {
-	  "neovim/nvim-lspconfig",
-	  lazy = false,
-	  config = function()
-		  local capabilities = require("cmp_nvim_lsp").default_capabilities()
-
-		  local on_attach = function(_, bufnr)
-			  local buf_map = function(mode, lhs, rhs, desc)
-				  vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, desc = desc })
-			  end
-
-			  -- Vim-style LSP navigation (keep as fallbacks)
-			  buf_map("n", "gD", vim.lsp.buf.declaration, "Go to Declaration")
-			  buf_map("n", "gd", vim.lsp.buf.definition, "Go to Definition")
-			  buf_map("n", "K", vim.lsp.buf.hover, "Hover Documentation")
-			  buf_map("n", "gi", vim.lsp.buf.implementation, "Go to Implementation")
-			  buf_map("n", "gr", vim.lsp.buf.references, "Find References")
-			  buf_map("n", "<leader>rn", vim.lsp.buf.rename, "Rename Symbol")
-			  buf_map("n", "<leader>ca", vim.lsp.buf.code_action, "Code Action")
-
-			  -- CLion-inspired (GNOME Terminal compatible)
-			  buf_map("n", "<C-b>", vim.lsp.buf.definition, "Go to Definition")
-			  buf_map("n", "<A-CR>", vim.lsp.buf.code_action, "Quick Fix")
-			  buf_map("i", "<C-p>", vim.lsp.buf.signature_help, "Parameter Info")
-
-			  -- Call hierarchy
-			  buf_map("n", "<leader>ci", vim.lsp.buf.incoming_calls, "Incoming Calls")
-			  buf_map("n", "<leader>co", vim.lsp.buf.outgoing_calls, "Outgoing Calls")
-
-			  -- Type definition
-			  buf_map("n", "<leader>ct", vim.lsp.buf.type_definition, "Type Definition")
-
-			  -- Signature help
-			  buf_map("n", "<C-k>", vim.lsp.buf.signature_help, "Signature Help")
-			  buf_map("i", "<C-k>", vim.lsp.buf.signature_help, "Signature Help")
-
-			  -- Telescope symbol search
-			  buf_map("n", "<leader>ss", "<cmd>Telescope lsp_workspace_symbols<cr>", "Workspace Symbols")
-			  buf_map("n", "<leader>sd", "<cmd>Telescope lsp_document_symbols<cr>", "Document Symbols")
-		  end
-
-		  -- Register language servers
-		  vim.lsp.enable({ "clangd", "pyright", "cmake" })
-
-		  vim.api.nvim_create_autocmd("LspAttach", {
-			  callback = function(args)
-				  local client = vim.lsp.get_client_by_id(args.data.client_id)
-				  on_attach(client, args.buf)
-			  end,
-		  })
-
-	  end,
   },
 
 
@@ -219,36 +145,6 @@ return {
       vim.keymap.set("n", "<leader>dr", dap.repl.open, { desc = "DAP: Open REPL" })
     end,
   },
-  -- Git UI
-  {
-    "NeogitOrg/neogit",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "sindrets/diffview.nvim",
-      "nvim-telescope/telescope.nvim",
-    },
-    config = function()
-      require("neogit").setup({
-        integrations = {
-          diffview = true,
-          telescope = true,
-        },
-      })
-      vim.keymap.set("n", "<leader>gg", "<cmd>Neogit<CR>", { desc = "Neogit Status" })
-    end,
-  },
-  {
-    "sindrets/diffview.nvim",
-    cmd = { "DiffviewOpen", "DiffviewFileHistory" },
-    config = function()
-      require("diffview").setup()
-      vim.keymap.set("n", "<leader>gd", "<cmd>DiffviewOpen<CR>", { desc = "Diffview Open" })
-      vim.keymap.set("n", "<leader>gh", "<cmd>DiffviewFileHistory %<CR>", { desc = "Diffview File History" })
-      vim.keymap.set("n", "<leader>gH", "<cmd>DiffviewFileHistory<CR>", { desc = "Diffview Branch History" })
-      vim.keymap.set("n", "<leader>gq", "<cmd>DiffviewClose<CR>", { desc = "Diffview Close" })
-    end,
-  },
-
   -- Code folding
   {
     "kevinhwang91/nvim-ufo",
