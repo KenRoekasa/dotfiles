@@ -1,24 +1,36 @@
--- File: ~/.config/nvim/lua/plugins/lsp/on_attach.lua
+local function on_attach(_, bufnr)
+  local buf_map = function(mode, lhs, rhs, desc)
+    vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, desc = desc })
+  end
 
-local function on_attach(client, bufnr)
-  -- Enable completion for the buffer
-  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+  -- Vim-style LSP navigation (keep as fallbacks)
+  buf_map("n", "gD", vim.lsp.buf.declaration, "Go to Declaration")
+  buf_map("n", "gd", vim.lsp.buf.definition, "Go to Definition")
+  buf_map("n", "K", vim.lsp.buf.hover, "Hover Documentation")
+  buf_map("n", "gi", vim.lsp.buf.implementation, "Go to Implementation")
+  buf_map("n", "gr", vim.lsp.buf.references, "Find References")
+  buf_map("n", "<leader>rn", vim.lsp.buf.rename, "Rename Symbol")
+  buf_map("n", "<leader>ca", vim.lsp.buf.code_action, "Code Action")
 
-  -- Keybindings for LSP
-  local opts = { noremap = true, silent = true }
-  
-  -- Use a helper function for keymaps
-  local keymap = vim.keymap.set
+  -- CLion-inspired (GNOME Terminal compatible)
+  buf_map("n", "<C-b>", vim.lsp.buf.definition, "Go to Definition")
+  buf_map("n", "<A-CR>", vim.lsp.buf.code_action, "Quick Fix")
+  buf_map("i", "<C-p>", vim.lsp.buf.signature_help, "Parameter Info")
 
-  keymap('n', 'gD', vim.lsp.buf.declaration, opts)
-  keymap('n', 'gd', vim.lsp.buf.definition, opts)
-  keymap('n', 'K', vim.lsp.buf.hover, opts)
-  keymap('n', 'gi', vim.lsp.buf.implementation, opts)
-  keymap('n', '<C-k>', vim.lsp.buf.signature_help, opts)
-  keymap('n', '<leader>rn', vim.lsp.buf.rename, opts)
-  keymap('n', '<leader>ca', vim.lsp.buf.code_action, opts)
-  keymap('n', 'gr', vim.lsp.buf.references, opts)
-  keymap('n', '<leader>f', function() vim.lsp.buf.format({ async = true }) end, opts)
+  -- Call hierarchy
+  buf_map("n", "<leader>ci", vim.lsp.buf.incoming_calls, "Incoming Calls")
+  buf_map("n", "<leader>co", vim.lsp.buf.outgoing_calls, "Outgoing Calls")
+
+  -- Type definition
+  buf_map("n", "<leader>ct", vim.lsp.buf.type_definition, "Type Definition")
+
+  -- Signature help
+  buf_map("n", "<C-k>", vim.lsp.buf.signature_help, "Signature Help")
+  buf_map("i", "<C-k>", vim.lsp.buf.signature_help, "Signature Help")
+
+  -- Telescope symbol search
+  buf_map("n", "<leader>ss", "<cmd>Telescope lsp_workspace_symbols<cr>", "Workspace Symbols")
+  buf_map("n", "<leader>sd", "<cmd>Telescope lsp_document_symbols<cr>", "Document Symbols")
 end
 
 return on_attach
