@@ -83,9 +83,13 @@ return {
         view = {
           { "n", "<C-o>", function() require("diffview.actions").goto_file_edit() end, { desc = "Open source file" } },
           { "n", "<F4>",  function() require("diffview.actions").goto_file_edit() end, { desc = "Open source file" } },
+          { "n", "<F7>",  "]c", { desc = "Next hunk" } },
+          { "n", "<F8>",  "[c", { desc = "Prev hunk" } },
         },
         file_panel = {
           { "n", "<F4>", function() require("diffview.actions").goto_file_edit() end, { desc = "Open source file" } },
+          { "n", "<F7>", function() require("diffview.actions").select_next_entry() end, { desc = "Next file" } },
+          { "n", "<F8>", function() require("diffview.actions").select_prev_entry() end, { desc = "Prev file" } },
         },
         file_history_panel = {
           { "n", "<C-o>", function() require("diffview.actions").open_in_diffview() end, { desc = "Open in diff" } },
