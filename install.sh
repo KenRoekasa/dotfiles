@@ -3,6 +3,14 @@ set -e
 
 DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
+echo "==> Installing system dependencies..."
+sudo dnf install -y epel-release
+sudo dnf remove -y nodejs npm 2>/dev/null || true
+sudo dnf install -y stow git curl ripgrep neovim tmux nodejs npm
+
+echo "==> Installing tree-sitter-cli..."
+sudo npm install -g tree-sitter-cli
+
 echo "==> Stowing dotfiles..."
 cd "$DOTFILES_DIR"
 stow tmux nvim wezterm bash
@@ -26,8 +34,19 @@ else
   echo "    TPM already installed, skipping."
 fi
 
+echo "==> Installing vim-plug..."
+PLUG_PATH="$HOME/.vim/autoload/plug.vim"
+if [ ! -f "$PLUG_PATH" ]; then
+  curl -fLo "$PLUG_PATH" --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  echo "    vim-plug installed."
+else
+  echo "    vim-plug already installed, skipping."
+fi
+
 echo ""
 echo "Done! Next steps:"
 echo "  - Open nvim — lazy.nvim will install all plugins on first launch"
+echo "  - Run :checkhealth in nvim to verify everything is set up correctly"
 echo "  - Run :Copilot auth in nvim to authenticate GitHub Copilot"
 echo "  - Inside tmux, press prefix + I to install tmux plugins"

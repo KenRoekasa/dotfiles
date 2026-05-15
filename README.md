@@ -12,11 +12,13 @@
 
 ## Dependencies
 
-Install these before running the install script:
+Install these before running the install script (the script handles this automatically):
 
 ```bash
-sudo dnf install epel-release
-sudo dnf install stow git curl ripgrep neovim tmux
+sudo dnf install -y epel-release
+sudo dnf remove -y nodejs npm   # remove old Node 10 if present
+sudo dnf install -y stow git curl ripgrep neovim tmux nodejs npm
+sudo npm install -g tree-sitter-cli
 ```
 
 ## Installation
@@ -127,3 +129,14 @@ Run `:Copilot auth` on first launch to authenticate GitHub Copilot.
 | `<leader>ac` | Toggle Claude Code |
 | `<leader>gg` | Neogit status |
 | `<leader>gh` | File history (diffview) |
+
+### 5. Vim
+
+Install [vim-plug](https://github.com/junegunn/vim-plug):
+
+```bash
+curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+```
+
+Then open vim and run `:PlugInstall` to install plugins.
