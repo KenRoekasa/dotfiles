@@ -10,11 +10,28 @@
 | `bash`  | Bash config |
 | `vim`   | Vim config |
 
+## Dependencies
+
+Install these before running the install script:
+
+```bash
+sudo dnf install epel-release
+sudo dnf install stow git curl ripgrep neovim tmux
+```
+
 ## Installation
 
-### 1. Stow packages
+### 1. Run the install script
 
 From `~/dotfiles`:
+
+```bash
+cd ~/dotfiles && ./install.sh
+```
+
+This will stow all packages and bootstrap lazy.nvim and TPM automatically.
+
+Alternatively, stow manually:
 
 ```bash
 cd ~/dotfiles && stow tmux nvim wezterm bash
@@ -29,7 +46,14 @@ This creates the following symlinks:
 
 ### 2. WezTerm
 
-Build from source (required on Rocky Linux 8):
+Install via RPM (Rocky Linux 8):
+
+```bash
+curl -LO "https://github.com/wezterm/wezterm/releases/download/20240203-110809-5046fc22/wezterm-20240203_110809_5046fc22-1.centos8.x86_64.rpm"
+sudo dnf install ./wezterm-20240203_110809_5046fc22-1.centos8.x86_64.rpm
+```
+
+Or build from source:
 
 ```bash
 # Dependencies
