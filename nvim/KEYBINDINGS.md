@@ -1,5 +1,23 @@
 # LazyVim Keybindings Reference
 
+## CLion-Style Shortcuts
+
+| Key | Action |
+|-----|--------|
+| `F2` | Next Error/Diagnostic |
+| `Shift+F2` | Previous Error/Diagnostic |
+| `F4` | Jump to Source (go to definition) |
+| `F10` | Switch Source/Header |
+| `Alt+O` | Switch Source/Header |
+| `Alt+1` | File Tree Toggle |
+| `Alt+4` | Problems/Diagnostics Panel |
+| `Alt+7` | Structure/Outline (Aerial) |
+| `Ctrl+Shift+N` | Find File |
+| `Ctrl+Shift+F` | Find in Path (live grep) |
+| `Ctrl+Click` | Go to Definition |
+| `Alt+Left` | Navigate Back |
+| `Alt+Right` | Navigate Forward |
+
 ## Core LazyVim Keybindings (built-in)
 
 | Key | Action |
@@ -15,6 +33,7 @@
 | `<leader>cr` | Rename Symbol |
 | `<leader>ca` | Code Action |
 | `<leader>cf` | Format |
+| `<leader>uC` | Change Colorscheme |
 | `gd` | Go to Definition |
 | `gr` | References |
 | `K` | Hover Documentation |
@@ -33,6 +52,7 @@
 | `<leader>cl` | Select Launch Target |
 | `<leader>cT` | Select Build Type |
 | `<leader>cp` | Select Configure Preset |
+| `<leader>cB` | Select Build Preset |
 | `<leader>ck` | Select Kit |
 | `<leader>cx` | Set Launch Args |
 | `<leader>cc` | CMake Clean |
@@ -55,9 +75,11 @@
 | Key | Action |
 |-----|--------|
 | `<leader>tt` | Run nearest test |
+| `<leader>td` | Debug nearest test |
 | `<leader>tf` | Run file tests |
 | `<leader>ts` | Toggle test summary |
 | `<leader>to` | Show test output |
+| `<leader>tO` | Toggle output panel |
 | `<leader>tS` | Stop test |
 
 ## Navigation
@@ -66,10 +88,8 @@
 |-----|--------|
 | `s` | Flash Jump (type chars, pick label) |
 | `S` | Flash Treesitter (select by syntax) |
+| `r` (operator) | Remote Flash |
 | `-` | Oil (filesystem as buffer) |
-| `Ctrl+Click` | Go to Definition |
-| `Alt+Left` | Navigate Back |
-| `Alt+Right` | Navigate Forward |
 | `<leader>sr` | Search & Replace (grug-far) |
 | `<leader>sw` | Search word under cursor |
 
@@ -111,17 +131,4 @@
 | `<leader>tf` | Toggle format on save |
 | `<leader>mr` | Toggle Markdown Render |
 | `<leader>mp` | Markdown Preview (browser) |
-
----
-
-## Old NvChad Alt-Key Bindings (for reference)
-
-These were used in the NvChad setup and are no longer active:
-
-| Old Key | Was | Now |
-|---------|-----|-----|
-| `Alt-1` | File tree | `<leader>e` |
-| `Alt-7` | Structure/Outline | `<leader>cs` (aerial) |
-| `Alt-4` | Problems | `<leader>xx` |
-| `Alt-9` | Git (Neogit) | `<leader>gg` (lazygit) |
-| `Alt-0` | Diffview | `<leader>gd` |
+| `<leader>ch` | Switch Source/Header |
