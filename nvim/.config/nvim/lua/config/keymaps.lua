@@ -14,3 +14,13 @@ end, { desc = "Toggle format on save" })
 map("n", "<C-LeftMouse>", "<LeftMouse><cmd>lua vim.lsp.buf.definition()<CR>", { desc = "Go to Definition" })
 map("n", "<A-Left>", "<C-o>", { desc = "Navigate Back" })
 map("n", "<A-Right>", "<C-i>", { desc = "Navigate Forward" })
+
+-- CLion-style shortcuts
+map("n", "<F2>", function() vim.diagnostic.goto_next() end, { desc = "Next Error" })
+map("n", "<S-F2>", function() vim.diagnostic.goto_prev() end, { desc = "Previous Error" })
+map("n", "<F4>", function() vim.lsp.buf.definition() end, { desc = "Jump to Source" })
+map("n", "<A-1>", function() Snacks.explorer() end, { desc = "Project (file tree)" })
+map("n", "<A-4>", "<cmd>Trouble diagnostics toggle<cr>", { desc = "Problems" })
+map("n", "<A-7>", "<cmd>AerialToggle<CR>", { desc = "Structure (outline)" })
+map("n", "<C-S-n>", "<cmd>FzfLua files<CR>", { desc = "Go to File (Ctrl+Shift+N)" })
+map("n", "<C-S-f>", "<cmd>FzfLua live_grep<CR>", { desc = "Find in Path (Ctrl+Shift+F)" })

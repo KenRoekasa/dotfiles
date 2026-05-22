@@ -23,6 +23,11 @@ return {
             completeUnimported = true,
             clangdFileStatus = true,
           },
+          keys = {
+            { "<leader>ch", "<cmd>ClangdSwitchSourceHeader<cr>", desc = "Switch Source/Header" },
+            { "<A-o>", "<cmd>ClangdSwitchSourceHeader<cr>", desc = "Switch Source/Header" },
+            { "<F10>", "<cmd>ClangdSwitchSourceHeader<cr>", desc = "Switch Source/Header" },
+          },
         },
       },
     },
