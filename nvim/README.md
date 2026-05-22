@@ -62,6 +62,45 @@ tar xf lazygit.tar.gz lazygit && sudo install lazygit /usr/local/bin/
 brew install neovim git ripgrep fd fzf lazygit node cmake clang-format tree-sitter
 ```
 
+## Rocky 8 / RHEL 8 Workaround: tree-sitter-cli
+
+Rocky 8 ships glibc 2.28. The pre-built `tree-sitter-cli` binary (from Mason/npm) requires glibc 2.29+, so `:TSInstall` will fail with:
+
+```
+tree-sitter: /lib64/libc.so.6: version `GLIBC_2.29' not found
+```
+
+**You cannot upgrade glibc** on Rocky 8 — it would break the entire system.
+
+**Fix: Build tree-sitter-cli from source with Cargo:**
+
+```bash
+# Install Rust (if not present)
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+source ~/.cargo/env
+
+# Build tree-sitter-cli (links against YOUR glibc 2.28)
+cargo install tree-sitter-cli
+
+# Verify
+tree-sitter --version
+```
+
+Then symlink it so Mason/Neovim finds it:
+
+```bash
+# Remove Mason's broken pre-built binary
+rm -rf ~/.local/share/nvim/mason/packages/tree-sitter-cli
+rm -f ~/.local/share/nvim/mason/bin/tree-sitter
+
+# Symlink your cargo-built version
+ln -sf ~/.cargo/bin/tree-sitter ~/.local/share/nvim/mason/bin/tree-sitter
+```
+
+After this, `:TSInstall cpp` (and all other parsers) will work.
+
+**Why the old NvChad setup worked:** It used an older nvim-treesitter version that compiled parsers with `gcc` directly. Since Neovim 0.12 (March 2026), nvim-treesitter requires the `tree-sitter-cli` binary.
+
 ## Setup
 
 ```bash
