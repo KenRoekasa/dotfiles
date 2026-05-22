@@ -80,12 +80,11 @@ return {
     },
   },
   {
-    "nvim-pack/nvim-spectre",
-    dependencies = { "nvim-lua/plenary.nvim" },
+    "MagicDuck/grug-far.nvim",
     keys = {
-      { "<leader>sr", function() require("spectre").toggle() end, desc = "Search & Replace (Spectre)" },
-      { "<leader>sw", function() require("spectre").open_visual({ select_word = true }) end, desc = "Search current word (Spectre)" },
-      { "<leader>sw", function() require("spectre").open_visual() end, mode = "v", desc = "Search selection (Spectre)" },
+      { "<leader>sr", function() require("grug-far").open() end, desc = "Search & Replace (grug-far)" },
+      { "<leader>sw", function() require("grug-far").open({ prefills = { search = vim.fn.expand("<cword>") } }) end, desc = "Search current word (grug-far)" },
+      { "<leader>sw", function() require("grug-far").open({ prefills = { search = vim.fn.expand("<cword>") } }) end, mode = "v", desc = "Search selection (grug-far)" },
     },
     opts = {},
   },

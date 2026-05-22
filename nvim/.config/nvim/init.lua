@@ -34,6 +34,8 @@ require "autocmds"
 
 vim.opt.tabstop = 4
 vim.opt.relativenumber = true
+vim.opt.undofile = true
+vim.opt.scrolloff = 8
 
 vim.schedule(function()
   require "mappings"

@@ -18,6 +18,7 @@ M.ui = {
   tabufline = {
     bufwidth = 35,
   },
+  -- NvChad statusline disabled in favor of lualine (see plugins/statusline.lua)
   statusline = {
     enabled = false,
   },

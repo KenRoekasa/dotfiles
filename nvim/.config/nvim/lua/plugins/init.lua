@@ -8,15 +8,29 @@ return {
     event = "BufWritePre",
     config = function()
       local clang_format = vim.fn.executable("clang-format") == 1 and { "clang_format" } or {}
+
+      vim.g.format_on_save = true
+
       require("conform").setup({
         formatters_by_ft = {
           c = clang_format,
           cpp = clang_format,
+          lua = { "stylua" },
         },
+        format_on_save = function()
+          if not vim.g.format_on_save then return end
+          return { timeout_ms = 2000, lsp_fallback = true }
+        end,
       })
+
       vim.keymap.set({ "n", "v" }, "<leader>fm", function()
         require("conform").format({ lsp_fallback = true, async = true, timeout_ms = 5000 })
       end, { desc = "Reformat Code" })
+
+      vim.keymap.set("n", "<leader>tf", function()
+        vim.g.format_on_save = not vim.g.format_on_save
+        vim.notify("Format on save: " .. (vim.g.format_on_save and "ON" or "OFF"), vim.log.levels.INFO)
+      end, { desc = "Toggle format on save" })
     end,
   },
 
@@ -196,6 +210,19 @@ return {
     ft = { "markdown" },
     dependencies = { "nvim-treesitter/nvim-treesitter" },
     opts = {},
+  },
+
+  -- Markdown preview in browser (supports mermaid diagrams)
+  {
+    "iamcco/markdown-preview.nvim",
+    ft = { "markdown" },
+    build = "cd app && npm install",
+    init = function()
+      vim.g.mkdp_filetypes = { "markdown" }
+    end,
+    keys = {
+      { "<leader>mp", "<cmd>MarkdownPreviewToggle<cr>", desc = "Markdown Preview" },
+    },
   },
 }
 

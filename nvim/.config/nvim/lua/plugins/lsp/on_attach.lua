@@ -24,9 +24,9 @@ local function on_attach(_, bufnr)
   -- Type definition
   buf_map("n", "<leader>ct", vim.lsp.buf.type_definition, "Type Definition")
 
-  -- Signature help
-  buf_map("n", "<C-k>", vim.lsp.buf.signature_help, "Signature Help")
-  buf_map("i", "<C-k>", vim.lsp.buf.signature_help, "Signature Help")
+  -- Signature help (avoid <C-k> which conflicts with tmux-navigator)
+  buf_map("n", "<leader>ck", vim.lsp.buf.signature_help, "Signature Help")
+  buf_map("i", "<C-S-k>", vim.lsp.buf.signature_help, "Signature Help")
 
   -- Telescope symbol search
   buf_map("n", "<leader>ss", "<cmd>Telescope lsp_workspace_symbols<cr>", "Workspace Symbols")
