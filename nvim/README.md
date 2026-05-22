@@ -1,105 +1,112 @@
 # Neovim Configuration
 
-NvChad v2.5-based setup focused on C/C++ development with CMake, debugging, and AI assistance.
+LazyVim-based setup focused on C/C++ development with CMake, debugging, and AI assistance.
 
-## Current Plugin Stack
+## External Dependencies
 
-| Category | Plugins |
-|----------|---------|
-| LSP | clangd, cmake, mason, nvim-lspconfig |
-| Completion | nvim-cmp (via NvChad) |
-| Navigation | Harpoon 2, Telescope, vim-tmux-navigator, Spectre |
-| Git | gitsigns, Neogit, diffview |
-| Debugging | nvim-dap, dap-ui, codelldb, GDB |
-| Testing | neotest + neotest-ctest |
-| AI | Copilot, Claude Code |
-| UI | lualine, aerial, edgy (sidebar), barbecue (breadcrumbs), nvim-ufo (folding) |
-| Formatting | conform.nvim (clang-format, stylua) |
-| Terminal | toggleterm |
-| Misc | vim-visual-multi, ouroboros (header/source switch), render-markdown |
+Install these system packages before launching Neovim:
 
-## Improvement Roadmap
+### Required
 
-### 🔴 High Impact (Intuitiveness & Productivity)
+| Package | Purpose | Min Version |
+|---------|---------|-------------|
+| **neovim** | Editor | 0.11+ |
+| **git** | Plugin manager, lazygit | 2.19+ |
+| **gcc** / **g++** | Build treesitter parsers | any |
+| **make** | Build treesitter parsers | any |
+| **curl** | Plugin downloads (blink.cmp, Mason) | any |
+| **node** + **npm** | markdown-preview, some LSP servers | 18+ |
 
-#### 1. Replace `nvim-cmp` with `blink.cmp`
-- **Why**: Faster (Rust backend), batteries-included completion with better defaults, less config needed.
-- **Caveat**: NvChad uses nvim-cmp internally — may require overriding. Wait if stability is preferred.
-- **Repo**: https://github.com/Saghen/blink.cmp
+### Highly Recommended
 
-#### 2. Add `noice.nvim`
-- **Why**: Replaces Neovim's default message/cmdline/popup UI with floating, searchable, dismissible notifications. Messages no longer interrupt workflow.
-- **Repo**: https://github.com/folke/noice.nvim
+| Package | Purpose |
+|---------|---------|
+| **ripgrep** (`rg`) | Live grep, fzf-lua search |
+| **fd** (`fd-find`) | Fast file finding (fzf-lua) |
+| **fzf** | Fuzzy finder backend |
+| **lazygit** | Git UI (`<leader>gg`) |
+| **tree-sitter** CLI | Treesitter parser compilation |
+| **clang-format** | C/C++ formatting |
+| **cmake** | CMake project builds |
 
-#### 3. Add `fidget.nvim`
-- **Why**: Shows LSP progress (indexing, formatting) as subtle inline spinners. No more silent background work with no feedback.
-- **Repo**: https://github.com/j-hui/fidget.nvim
+### Optional
 
-#### 4. Replace `nvim-spectre` with `grug-far.nvim`
-- **Why**: Modern search & replace with live preview, better UI, and active maintenance. Spectre is archived/unmaintained.
-- **Repo**: https://github.com/MagicDuck/grug-far.nvim
+| Package | Purpose |
+|---------|---------|
+| **codelldb** | C/C++ debug adapter (installed via Mason) |
+| **gdb** 14+ | Alternative debug adapter (DAP mode) |
+| **stylua** | Lua formatting (installed via Mason) |
+| **python3** + **pip** | Some LSP servers |
+| **Nerd Font** v3+ | Icons in file tree, statusline, etc. |
 
-#### 5. Add `flash.nvim`
-- **Why**: Superior motion/jump plugin. Much more intuitive than default `f`/`t`/`/` for navigating within visible buffer. Provides labeled jumps.
-- **Repo**: https://github.com/folke/flash.nvim
+### Install Commands
 
-### 🟡 Medium Impact (Quality of Life)
-
-#### 6. Add `nvim-bqf`
-- **Why**: Enhanced quickfix window with preview and fzf integration. Makes `gr` (references) and grep results much easier to navigate.
-- **Repo**: https://github.com/kevinhwang91/nvim-bqf
-
-#### 7. Enable format-on-save with toggle
-- **Why**: Currently commented out in conform config. Add a toggle keybind (similar to existing autosave toggle) for on-demand formatting.
-- **Action**: Uncomment and wire up `<leader>tf` to toggle format-on-save.
-
-#### 8. Add `nvim-surround` or `mini.surround`
-- **Why**: Essential text manipulation — wrap, change, delete surrounding characters (`"`, `(`, `{`, etc.). Fundamental for editing code.
-- **Repo**: https://github.com/kylechui/nvim-surround
-
-#### 9. Add `indent-blankline.nvim` v3
-- **Why**: Visual indent guides help with deeply nested C++ code. Shows scope context.
-- **Repo**: https://github.com/lukas-reineke/indent-blankline.nvim
-
-#### 10. Add `oil.nvim` alongside NvimTree
-- **Why**: Edit filesystem as a buffer (rename/move/create files naturally). More intuitive for quick file operations than a tree explorer.
-- **Repo**: https://github.com/stevearc/oil.nvim
-
-### 🟢 Config Tweaks (No new plugins)
-
-#### 11. Fix `<C-k>` keybind conflict
-- **Problem**: `<C-k>` in `on_attach.lua` (signature help) overrides tmux-navigator's `<C-k>` for split navigation.
-- **Fix**: Remap signature help to `<C-S-k>` or `<leader>ck`.
-
-#### 12. Consolidate conform config
-- **Problem**: Formatters defined in both `plugins/init.lua` (clang-format) and `configs/conform.lua` (stylua). The `configs/conform.lua` isn't being loaded by anything.
-- **Fix**: Merge all formatter config into `plugins/init.lua` conform setup.
-
-#### 13. Add persistent undo
-```lua
-vim.opt.undofile = true
+**Fedora / Rocky Linux:**
+```bash
+sudo dnf install neovim git gcc g++ make curl nodejs npm ripgrep fd-find fzf cmake clang-tools-extra tree-sitter-cli
+# lazygit (from COPR or GitHub releases)
+sudo dnf copr enable atim/lazygit -y && sudo dnf install lazygit
 ```
-- **Why**: Undo history survives across sessions. Pairs well with the persistence.nvim session plugin.
 
-#### 14. Add scrolloff
-```lua
-vim.opt.scrolloff = 8
+**Ubuntu / Debian:**
+```bash
+sudo apt install neovim git gcc g++ make curl nodejs npm ripgrep fd-find fzf cmake clang-format
+# lazygit
+LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | grep -Po '"tag_name": "v\K[^"]*')
+curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/latest/download/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz"
+tar xf lazygit.tar.gz lazygit && sudo install lazygit /usr/local/bin/
 ```
-- **Why**: Keeps cursor away from screen edges during navigation. Less disorienting.
 
-#### 15. Clean up NvChad statusline override
-- **Current state**: `statusline = { enabled = false }` in chadrc + lualine loaded separately.
-- **Action**: Add a comment clarifying this is intentional, or remove NvChad's tabufline dependency if not needed.
+**macOS (Homebrew):**
+```bash
+brew install neovim git ripgrep fd fzf lazygit node cmake clang-format tree-sitter
+```
 
-## Suggested Implementation Order
+## Setup
 
-1. `flash.nvim` — immediate navigation improvement, no conflicts
-2. `noice.nvim` — better UX with zero workflow change
-3. `fidget.nvim` — tiny plugin, instant feedback improvement
-4. Replace Spectre → `grug-far.nvim` — drop-in improvement
-5. Format-on-save toggle — config tweak only
-6. Fix `<C-k>` keybind conflict — config tweak only
-7. `nvim-bqf` — quickfix enhancement
-8. `oil.nvim` — filesystem editing
-9. `nvim-surround` — text manipulation
-10. `blink.cmp` — larger migration, do last
+```bash
+# Symlink config
+ln -sfn ~/dotfiles/nvim/.config/nvim ~/.config/nvim
+
+# Clear any old Neovim data
+rm -rf ~/.local/share/nvim ~/.local/state/nvim ~/.cache/nvim
+
+# Launch — lazy.nvim bootstraps everything
+nvim
+```
+
+On first launch, all plugins will auto-install. Wait for it to finish, then restart Neovim.
+
+## Plugin Structure
+
+```
+lua/plugins/
+├── ai.lua         → Copilot + Claude Code
+├── clangd.lua     → clangd LSP flags
+├── cmake.lua      → cmake-tools config + keybinds
+├── dap.lua        → GDB adapter + virtual text
+├── editor.lua     → flash, surround, multicursor, oil, grug-far, toggleterm
+├── git.lua        → diffview
+├── ide-feel.lua   → dropbar, lightbulb, scrollbar, symbol-usage, ufo, bqf, dressing, indent
+├── markdown.lua   → render-markdown + preview
+├── test.lua       → neotest + ctest
+└── ui.lua         → noice, fidget, inlay hints
+```
+
+## LazyVim Extras Enabled
+
+These are loaded via `lua/config/lazy.lua`:
+
+- `lang.clangd` — clangd + clangd_extensions + codelldb
+- `lang.cmake` — cmake-tools + neocmake LSP
+- `dap.core` — nvim-dap + dap-ui + Mason DAP
+- `editor.aerial` — Structure panel (symbol outline)
+- `editor.inc-rename` — In-place rename preview
+- `editor.fzf` — fzf-lua as the fuzzy finder
+- `ui.edgy` — Docked side panels (neo-tree, aerial, trouble, dap-ui)
+- `ui.treesitter-context` — Sticky function headers
+
+## See Also
+
+- [KEYBINDINGS.md](KEYBINDINGS.md) — Full keybinding reference
+- [migration.md](migration.md) — Detailed migration guide from NvChad
