@@ -1,5 +1,21 @@
 require "nvchad.autocmds"
 
+-- Middle-click on tabufline to close buffer
+vim.keymap.set("n", "<MiddleMouse>", function()
+  local mousepos = vim.fn.getmousepos()
+  -- Only act on clicks in the tabline (line 0)
+  if mousepos.screenrow == 1 then
+    -- Click the tab first to switch to that buffer, then close it
+    vim.api.nvim_input("<LeftMouse>")
+    vim.schedule(function()
+      require("nvchad.tabufline").close_buffer()
+    end)
+  else
+    -- Normal middle-click paste behavior elsewhere
+    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<MiddleMouse>", true, false, true), "n", false)
+  end
+end, { desc = "Middle-click close buffer tab" })
+
 -- Auto-collapse #include blocks when opening C/C++ files
 vim.api.nvim_create_autocmd("FileType", {
   pattern = { "c", "cpp", "objc", "objcpp" },

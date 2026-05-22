@@ -77,21 +77,21 @@ cd wezterm && cargo build --release
 sudo cp target/release/wezterm target/release/wezterm-gui target/release/wezterm-mux-server /usr/local/bin/
 ```
 
-**WezTerm keybinds** (leader: `Ctrl+b`):
+**WezTerm keybinds** (leader: `Ctrl+a`):
 
 | Key | Action |
 |-----|--------|
-| `Ctrl+b %` | Split pane vertically |
-| `Ctrl+b "` | Split pane horizontally |
-| `Ctrl+b c` | New tab |
-| `Ctrl+b n/p` | Next/prev tab |
-| `Ctrl+b 1-9` | Go to tab |
-| `Ctrl+b h/j/k/l` | Navigate panes |
-| `Ctrl+b Ctrl+←↑↓→` | Resize panes |
-| `Ctrl+b z` | Zoom/unzoom pane |
-| `Ctrl+b Space` | Rotate panes |
-| `Ctrl+b [` | Copy mode |
-| `Ctrl+b ,` | Rename tab |
+| `Ctrl+a %` | Split pane vertically |
+| `Ctrl+a "` | Split pane horizontally |
+| `Ctrl+a c` | New tab |
+| `Ctrl+a n/p` | Next/prev tab |
+| `Ctrl+a 1-9` | Go to tab |
+| `Ctrl+a h/j/k/l` | Navigate panes |
+| `Ctrl+a Ctrl+←↑↓→` | Resize panes |
+| `Ctrl+a z` | Zoom/unzoom pane |
+| `Ctrl+a Space` | Rotate panes |
+| `Ctrl+a [` | Copy mode |
+| `Ctrl+a ,` | Rename tab |
 
 ### 3. Tmux
 

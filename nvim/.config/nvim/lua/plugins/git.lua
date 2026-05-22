@@ -79,6 +79,13 @@ return {
       { "<leader>gx", "<cmd>DiffviewClose<cr>",         desc = "Close diff view" },
     },
     opts = {
+      file_history_panel = {
+        listing_style = "list",
+        win_config = {
+          position = "bottom",
+          height = 16,
+        },
+      },
       keymaps = {
         view = {
           { "n", "<C-o>", function() require("diffview.actions").goto_file_edit() end, { desc = "Open source file" } },

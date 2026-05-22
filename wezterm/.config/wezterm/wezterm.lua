@@ -23,7 +23,7 @@ config.window_padding = { left = 4, right = 4, top = 4, bottom = 4 }
 -- Keys: pane splitting and navigation (mirrors vim-tmux-navigator)
 local act = wezterm.action
 
-config.leader = { key = "b", mods = "CTRL", timeout_milliseconds = 1000 }
+config.leader = { key = "a", mods = "CTRL", timeout_milliseconds = 1000 }
 
 config.keys = {
   -- Send Ctrl+b through to apps (press twice)
