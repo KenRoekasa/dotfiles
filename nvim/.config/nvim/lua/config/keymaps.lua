@@ -24,3 +24,15 @@ map("n", "<A-4>", "<cmd>Trouble diagnostics toggle<cr>", { desc = "Problems" })
 map("n", "<A-7>", "<cmd>AerialToggle<CR>", { desc = "Structure (outline)" })
 map("n", "<C-S-n>", "<cmd>FzfLua files<CR>", { desc = "Go to File (Ctrl+Shift+N)" })
 map("n", "<C-S-f>", "<cmd>FzfLua live_grep<CR>", { desc = "Find in Path (Ctrl+Shift+F)" })
+
+-- Cheatsheet: open in a floating window
+map("n", "<leader>?", function()
+  local cheatsheet = vim.fn.stdpath("config"):gsub("/.config/nvim$", "") .. "/CHEATSHEET.md"
+  if vim.fn.filereadable(cheatsheet) == 0 then
+    cheatsheet = vim.fn.expand("~/dotfiles/nvim/CHEATSHEET.md")
+  end
+  vim.cmd("split " .. cheatsheet)
+  vim.bo.bufhidden = "wipe"
+  vim.bo.modifiable = false
+  vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = true })
+end, { desc = "Open Cheatsheet" })
