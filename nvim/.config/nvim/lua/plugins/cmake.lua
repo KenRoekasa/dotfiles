@@ -6,16 +6,6 @@ return {
     name = 'cmake-panel',
     dir = vim.fn.stdpath('config') .. '/lua',
     lazy = false,
-    keys = {
-      { '<S-F12>', function() require('cmake_panel').configure() end,                     desc = 'CMake Configure' },
-      { '<S-F11>', function() require('cmake_panel').build() end,                         desc = 'CMake Build All' },
-      { '<S-F9>',  function() require('cmake_panel').run_last() end,                      desc = 'CMake Build + Run Last Target' },
-      { '<A-F12>', function() require('cmake_panel').show_terminal({ focus = true }) end,  desc = 'CMake Terminal' },
-      { '<leader>cs', function() require('cmake_panel').select_target() end,              desc = '[C]Make [S]elect Target' },
-      { '<leader>cr', function() require('cmake_panel').run_last() end,                   desc = '[C]Make [R]e-run Last Target' },
-      { '<leader>co', function() require('cmake_panel').toggle_panel() end,               desc = '[C]Make Toggle Panel' },
-      { '<leader>cX', function() require('cmake_panel').stop_current() end,               desc = '[C]Make Stop Job' },
-    },
     config = function()
       vim.cmd([[
         function! CmakePanelWinbar() abort

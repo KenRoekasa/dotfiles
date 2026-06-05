@@ -65,13 +65,8 @@
 | `F8` | Step over |
 | `F7` | Step into |
 | `Space db` | Toggle breakpoint |
-| `Shift+F12` | CMake configure |
-| `Shift+F11` | CMake build all |
-| `Shift+F9` | CMake build + run last target |
-| `Space cs` | Select CMake target |
-| `Space cr` | Re-run last CMake target |
-| `Space co` | Toggle CMake panel |
-| `Space cX` | Stop CMake job |
+| `Space cb` | CMake build |
+| `Space cr` | CMake run |
 
 ### Tools
 | Key | Action |
