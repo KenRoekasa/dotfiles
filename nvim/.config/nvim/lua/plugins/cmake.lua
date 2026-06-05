@@ -1,25 +1,5 @@
 -- CMake integration (overrides LazyVim's cmake extra defaults)
 return {
-  -- CLion-style bottom panel: configure / build / run / terminal tabs
-  -- with clickable winbar, stop button, recent targets, command queue.
-  {
-    name = 'cmake-panel',
-    dir = vim.fn.stdpath('config') .. '/lua',
-    lazy = false,
-    config = function()
-      vim.cmd([[
-        function! CmakePanelWinbar() abort
-          try
-            return luaeval("require('cmake_panel').winbar()")
-          catch
-            return ''
-          endtry
-        endfunction
-      ]])
-      vim.opt.winbar = '%{%CmakePanelWinbar()%}'
-    end,
-  },
-
   {
     "Civitasv/cmake-tools.nvim",
     opts = {
