@@ -23,6 +23,10 @@ return {
             completeUnimported = true,
             clangdFileStatus = true,
           },
+          handlers = {
+            -- Suppress spurious -32602 errors from documentHighlight before index is ready
+            ["textDocument/documentHighlight"] = function() end,
+          },
           keys = {
             { "<leader>ch", "<cmd>ClangdSwitchSourceHeader<cr>", desc = "Switch Source/Header" },
             { "<A-o>", "<cmd>ClangdSwitchSourceHeader<cr>", desc = "Switch Source/Header" },
