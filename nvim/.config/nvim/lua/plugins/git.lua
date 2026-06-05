@@ -8,8 +8,33 @@ return {
         local map = function(lhs, rhs, desc)
           vim.keymap.set("n", lhs, rhs, { buffer = buf, silent = true, desc = desc })
         end
-        map("]h", function() gs.nav_hunk("next") end, "Next hunk")
-        map("[h", function() gs.nav_hunk("prev") end, "Prev hunk")        map("<leader>gh", gs.preview_hunk,             "Preview hunk")
+
+        -- Navigate hunks; if at end/start of file's hunks, jump to next/prev buffer
+        local function nav_hunk(direction)
+          local hunks = gs.get_hunks()
+          if not hunks or #hunks == 0 then
+            vim.cmd(direction == "next" and "bnext" or "bprev")
+            return
+          end
+          local line = vim.fn.line(".")
+          if direction == "next" then
+            local has_next = false
+            for _, h in ipairs(hunks) do
+              if h.added.start > line then has_next = true break end
+            end
+            if has_next then gs.nav_hunk("next") else vim.cmd("bnext") end
+          else
+            local has_prev = false
+            for i = #hunks, 1, -1 do
+              if hunks[i].added.start < line then has_prev = true break end
+            end
+            if has_prev then gs.nav_hunk("prev") else vim.cmd("bprev") end
+          end
+        end
+
+        map("]h", function() nav_hunk("next") end, "Next hunk")
+        map("[h", function() nav_hunk("prev") end, "Prev hunk")
+        map("<leader>gh", gs.preview_hunk,             "Preview hunk")
         map("<leader>gs", gs.stage_hunk,               "Stage hunk")
         map("<leader>gr", gs.reset_hunk,               "Reset hunk")
         map("<leader>gb", function() gs.blame_line({ full = true }) end, "Blame line")
@@ -27,20 +52,60 @@ return {
       { "<leader>gx", "<cmd>DiffviewClose<cr>", desc = "Close diff view" },
       {
         "<F7>", function()
-          if vim.wo.diff then vim.cmd("normal! ]c")
-          else require("gitsigns").nav_hunk("next") end
+          if vim.wo.diff then
+            -- In diffview: ]c to next hunk, wrap to next file when at end
+            local ok, lib = pcall(require, "diffview.lib")
+            local in_diffview = ok and lib.get_current_view() ~= nil
+            local before = vim.fn.line(".")
+            vim.cmd("normal! ]c")
+            if in_diffview then
+              vim.schedule(function()
+                if vim.fn.line(".") == before then
+                  require("diffview.actions").select_next_entry()
+                end
+              end)
+            end
+          else
+            require("gitsigns").nav_hunk("next", { wrap = false })
+          end
         end, desc = "Next hunk",
       },
       {
-        "<F19>", function()  -- S-F7 in most terminals sends F19
-          if vim.wo.diff then vim.cmd("normal! [c")
-          else require("gitsigns").nav_hunk("prev") end
+        "<F19>", function()
+          if vim.wo.diff then
+            local ok, lib = pcall(require, "diffview.lib")
+            local in_diffview = ok and lib.get_current_view() ~= nil
+            local before = vim.fn.line(".")
+            vim.cmd("normal! [c")
+            if in_diffview then
+              vim.schedule(function()
+                if vim.fn.line(".") == before then
+                  require("diffview.actions").select_prev_entry()
+                end
+              end)
+            end
+          else
+            require("gitsigns").nav_hunk("prev", { wrap = false })
+          end
         end, desc = "Prev hunk",
       },
       {
         "<S-F7>", function()
-          if vim.wo.diff then vim.cmd("normal! [c")
-          else require("gitsigns").nav_hunk("prev") end
+          if vim.wo.diff then
+            local ok, lib = pcall(require, "diffview.lib")
+            local in_diffview = ok and lib.get_current_view() ~= nil
+            local before = vim.fn.line(".")
+            vim.cmd("normal! [c")
+            if in_diffview then
+              vim.schedule(function()
+                if vim.fn.line(".") == before then
+                  require("diffview.actions").select_prev_entry()
+                end
+              end)
+            end
+          else
+            require("gitsigns").nav_hunk("prev", { wrap = false })
+          end
         end, desc = "Prev hunk",
       },
     },
