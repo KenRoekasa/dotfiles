@@ -6,6 +6,7 @@ vim.opt.shiftwidth = 4
 vim.opt.relativenumber = true
 vim.opt.scrolloff = 8
 vim.opt.mouse = "a"
+vim.opt.showtabline = 2  -- always show tab bar
 
 -- Auto-save on focus lost (toggleable)
 vim.g.autosave_on_focus_lost = false
