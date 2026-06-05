@@ -45,9 +45,25 @@ return {
       },
     },
     opts = {
+      enhanced_diff_hl = true,
+      use_icons        = true,
+      show_help_hints  = true,
+      view = {
+        default      = { layout = "diff2_horizontal" },
+        merge_tool   = { layout = "diff3_horizontal", disable_diagnostics = true },
+        file_history = { layout = "diff2_horizontal" },
+      },
+      file_panel = {
+        listing_style = "tree",
+        tree_options  = { flatten_dirs = true, folder_statuses = "only_folded" },
+        win_config    = { position = "left", width = 35 },
+      },
       file_history_panel = {
         listing_style = "list",
-        win_config = { position = "bottom", height = 16 },
+        win_config    = { position = "bottom", height = 16 },
+      },
+      hooks = {
+        diff_buf_read = function() vim.opt_local.cursorline = false end,
       },
     },
   },
