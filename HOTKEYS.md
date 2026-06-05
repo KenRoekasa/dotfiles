@@ -172,9 +172,14 @@
 |-----|--------|
 | `Space gg` / `Alt+9` | Neogit status |
 | `Space gd` | Diff view open |
-| `Space gh` | File history (diffview) |
+| `Space gf` | File history (diffview) |
 | `Space gH` | Branch history (diffview) |
 | `Space gx` | Close diffview |
+| `]h` / `[h` | Next / prev hunk |
+| `Space gh` | Preview hunk |
+| `Space gs` | Stage hunk |
+| `Space gr` | Reset hunk |
+| `Space gb` | Blame line |
 | `F4` | Open source file from diffview |
 | `Ctrl+o` | Open source file from diffview |
 
