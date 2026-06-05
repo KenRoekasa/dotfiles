@@ -176,6 +176,7 @@
 | `Space gH` | Branch history (diffview) |
 | `Space gx` | Close diffview |
 | `]h` / `[h` | Next / prev hunk |
+| `F7` / `Shift+F7` | Next / prev hunk (diff-aware) |
 | `Space gh` | Preview hunk |
 | `Space gs` | Stage hunk |
 | `Space gr` | Reset hunk |
