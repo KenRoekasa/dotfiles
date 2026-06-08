@@ -15,6 +15,13 @@ echo "==> Stowing dotfiles..."
 cd "$DOTFILES_DIR"
 stow tmux nvim wezterm bash
 
+echo "==> Installing latest fzf binary..."
+FZF_LATEST=$(curl -s https://api.github.com/repos/junegunn/fzf/releases/latest | grep '"tag_name"' | cut -d'"' -f4)
+mkdir -p "$HOME/.local/bin"
+curl -sL "https://github.com/junegunn/fzf/releases/download/${FZF_LATEST}/fzf-${FZF_LATEST#v}-linux_amd64.tar.gz" \
+  | tar xz -C "$HOME/.local/bin"
+echo "    fzf ${FZF_LATEST} installed."
+
 echo "==> Bootstrapping lazy.nvim..."
 LAZYPATH="${XDG_DATA_HOME:-$HOME/.local/share}/nvim/lazy/lazy.nvim"
 if [ ! -f "$LAZYPATH/lua/lazy/init.lua" ]; then

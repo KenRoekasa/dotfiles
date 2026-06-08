@@ -19,6 +19,8 @@ map("n", "<F2>",   function() vim.diagnostic.goto_next() end, { desc = "Next Dia
 map("n", "<S-F2>", function() vim.diagnostic.goto_prev() end, { desc = "Prev Diagnostic" })
 map("n", "<F4>",   function() vim.lsp.buf.definition() end,   { desc = "Jump to Source" })
 map("n", "<A-1>",  function() Snacks.explorer() end,          { desc = "File Tree" })
+map("n", "<A-2>",  function() Snacks.terminal() end,          { desc = "Terminal" })
+map("t", "<A-2>",  function() Snacks.terminal() end,          { desc = "Terminal" })
 map("n", "<A-4>",  "<cmd>Trouble diagnostics toggle<cr>",     { desc = "Problems" })
 map("n", "<A-7>",  "<cmd>AerialToggle<CR>",                   { desc = "Structure (outline)" })
 
