@@ -10,10 +10,6 @@ map("n", "<leader>tf", function()
   vim.notify("Format on save: " .. (vim.g.format_on_save and "ON" or "OFF"), vim.log.levels.INFO)
 end, { desc = "Toggle format on save" })
 
--- Live grep
-map("n", "<leader>fg", "<cmd>FzfLua live_grep<CR>", { desc = "Live Grep" })
-map("x", "<leader>fg", "<cmd>FzfLua grep_visual<CR>", { desc = "Grep Selection" })
-
 -- Navigation (Ctrl+click to definition)
 map("n", "<C-LeftMouse>", "<LeftMouse><cmd>lua vim.lsp.buf.definition()<CR>", { desc = "Go to Definition" })
 map("n", "<A-Left>", "<C-o>", { desc = "Navigate Back" })

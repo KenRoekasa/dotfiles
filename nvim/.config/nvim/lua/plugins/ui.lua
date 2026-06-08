@@ -46,8 +46,13 @@ return {
   },
 
   -- fzf-lua UI: match arbareus (tall window, vertical preview at bottom).
+  -- Also override LazyVim's <leader>fg (git_files) → live_grep.
   {
     "ibhagwan/fzf-lua",
+    keys = {
+      { "<leader>fg", "<cmd>FzfLua live_grep<CR>",   desc = "Live Grep",      mode = "n" },
+      { "<leader>fg", "<cmd>FzfLua grep_visual<CR>", desc = "Grep Selection", mode = "x" },
+    },
     opts = {
       winopts = {
         width   = 0.85,
