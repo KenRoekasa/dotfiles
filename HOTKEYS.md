@@ -20,7 +20,6 @@
 | Key | Action |
 |-----|--------|
 | `Ctrl+h/j/k/l` | Navigate nvim splits |
-| `Ctrl+b` | Go to definition |
 | `Ctrl+o` | Navigate back |
 | `Alt+Left/Right` | Navigate back/forward |
 | `F4` | Go to source file |
@@ -117,7 +116,6 @@
 | Key | Action |
 |-----|--------|
 | `Ctrl+h/j/k/l` | Navigate splits |
-| `Ctrl+b` | Go to definition (CLion-style) |
 | `gd` | Go to definition |
 | `gD` | Go to declaration |
 | `Ctrl+o` | Navigate back |
@@ -258,6 +256,7 @@
 | `Space tm` | Toggle terminal |
 | `Alt+1` | Toggle file tree |
 | `Space ta` | Toggle autosave on focus lost |
+| `Space uf` | Toggle auto-format (global) |
 | `Space mr` | Toggle markdown render |
 
 ---
