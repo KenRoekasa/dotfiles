@@ -26,6 +26,13 @@ local act = wezterm.action
 config.leader = { key = "a", mods = "CTRL", timeout_milliseconds = 1000 }
 
 config.keys = {
+  -- Pass Ctrl+Shift+N and Ctrl+Shift+F through to nvim (file search / live grep).
+  -- WezTerm's built-in new-window is remapped to Leader+N; scrollback search to Leader+/.
+  { key = "n", mods = "CTRL|SHIFT", action = act.SendKey { key = "n", mods = "CTRL|SHIFT" } },
+  { key = "f", mods = "CTRL|SHIFT", action = act.SendKey { key = "f", mods = "CTRL|SHIFT" } },
+  { key = "N", mods = "LEADER",     action = act.SpawnWindow },
+  { key = "/", mods = "LEADER",     action = act.Search { CaseSensitiveString = "" } },
+
   -- Send Ctrl+b through to apps (press twice)
   { key = "b", mods = "LEADER", action = act.SendKey { key = "b", mods = "CTRL" } },
 
