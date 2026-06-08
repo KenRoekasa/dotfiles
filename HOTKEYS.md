@@ -28,14 +28,19 @@
 | `Space x` | Close buffer |
 | `Space fb` | List open buffers |
 
-### Search
+### Find (all under `Space f`)
 | Key | Action |
 |-----|--------|
 | `Space ff` | Find file |
 | `Space fg` | Live grep |
 | `Space fg` (visual) | Grep selected text |
 | `Space fa` | Find action/command |
-| `Space sk` | Search keymaps |
+| `Space fk` | Search keymaps |
+| `Space fs` | Document symbols |
+| `Space fS` | Workspace symbols |
+| `Space fb` | Open buffers |
+| `Space fd` | Diagnostics |
+| `Space fr` | Recent files |
 
 ### Code
 | Key | Action |
@@ -150,17 +155,77 @@
 
 ---
 
-## Neovim — Search & Find
+## Neovim — Find (`<leader>f`)
 
+All picker / search functionality is consolidated under `<leader>f`.
+
+### Files & Buffers
 | Key | Action |
 |-----|--------|
-| `Space ff` | Find file |
-| `Space fg` | Live grep |
-| `Space fg` (visual) | Grep selected text |
-| `Space fa` | Find action/command |
-| `Space sk` | Search keymaps |
-| `Space ss` | Workspace symbols |
-| `Space sd` | Document symbols |
+| `Space ff` | Find files (root) |
+| `Space fF` | Find files (cwd) |
+| `Space fr` | Recent files |
+| `Space fR` | Recent files (cwd) |
+| `Space fc` | Find config file |
+| `Space fb` | Open buffers |
+| `Space fB` | Open buffers (all) |
+| `Space fl` | Buffer lines |
+| `Space fe` | File explorer (root) |
+| `Space fE` | File explorer (cwd) |
+
+### Grep
+| Key | Action |
+|-----|--------|
+| `Space fg` | Live grep (root) |
+| `Space fg` (visual) | Grep selection (root) |
+| `Space fG` | Live grep (cwd) |
+| `Space fw` | Grep word under cursor (root) |
+| `Space fW` | Grep word under cursor (cwd) |
+| `Space fw` (visual) | Grep selection (root) |
+| `Space fW` (visual) | Grep selection (cwd) |
+
+### Symbols & Diagnostics
+| Key | Action |
+|-----|--------|
+| `Space fs` | Document symbols |
+| `Space fS` | Workspace symbols |
+| `Space fd` | Diagnostics (workspace) |
+| `Space fD` | Diagnostics (buffer) |
+
+### Vim Internals
+| Key | Action |
+|-----|--------|
+| `Space fa` | Commands (action palette) |
+| `Space fA` | Auto commands |
+| `Space fk` | Keymaps |
+| `Space fh` | Help pages |
+| `Space fH` | Highlight groups |
+| `Space fM` | Man pages |
+| `Space f'` | Marks |
+| `Space f"` | Registers |
+| `Space f/` | Search history |
+| `Space f;` | Command history |
+
+### Lists
+| Key | Action |
+|-----|--------|
+| `Space fj` | Jumplist |
+| `Space fq` | Quickfix list |
+| `Space fL` | Location list |
+
+### Misc
+| Key | Action |
+|-----|--------|
+| `Space ft` | Todo comments |
+| `Space fT` | Todo / Fix / Fixme |
+| `Space fp` | Resume last picker |
+| `Space fx` | Search & replace (grug-far) |
+| `Space fX` | Search & replace word under cursor |
+| `Space fm` | Format code |
+
+---
+
+## Neovim — Search & Find (legacy)
 
 ---
 

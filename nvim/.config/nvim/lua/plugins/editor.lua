@@ -53,13 +53,9 @@ return {
     },
   },
 
-  -- Search & replace
+  -- Search & replace (keybinds live in plugins/find.lua under <leader>fx/fX)
   {
     "MagicDuck/grug-far.nvim",
-    keys = {
-      { "<leader>sr", function() require("grug-far").open() end, desc = "Search & Replace (grug-far)" },
-      { "<leader>sw", function() require("grug-far").open({ prefills = { search = vim.fn.expand("<cword>") } }) end, desc = "Search current word" },
-    },
     opts = {},
   },
 
