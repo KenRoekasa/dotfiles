@@ -11,8 +11,8 @@ map("n", "<leader>tf", function()
 end, { desc = "Toggle format on save" })
 
 -- Live grep
-map("n", "<leader>fw", "<cmd>FzfLua live_grep<CR>", { desc = "Live Grep" })
-map("x", "<leader>fw", "<cmd>FzfLua grep_visual<CR>", { desc = "Grep Selection" })
+map("n", "<leader>fg", "<cmd>FzfLua live_grep<CR>", { desc = "Live Grep" })
+map("x", "<leader>fg", "<cmd>FzfLua grep_visual<CR>", { desc = "Grep Selection" })
 
 -- Navigation (Ctrl+click to definition)
 map("n", "<C-LeftMouse>", "<LeftMouse><cmd>lua vim.lsp.buf.definition()<CR>", { desc = "Go to Definition" })

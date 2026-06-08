@@ -33,8 +33,8 @@
 | Key | Action |
 |-----|--------|
 | `Space ff` | Find file |
-| `Space fw` | Live grep |
-| `Space fw` (visual) | Grep selected text |
+| `Space fg` | Live grep |
+| `Space fg` (visual) | Grep selected text |
 | `Space fa` | Find action/command |
 | `Space sk` | Search keymaps |
 
@@ -157,8 +157,8 @@
 | Key | Action |
 |-----|--------|
 | `Space ff` | Find file |
-| `Space fw` | Live grep |
-| `Space fw` (visual) | Grep selected text |
+| `Space fg` | Live grep |
+| `Space fg` (visual) | Grep selected text |
 | `Space fa` | Find action/command |
 | `Space sk` | Search keymaps |
 | `Space ss` | Workspace symbols |
