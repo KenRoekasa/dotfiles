@@ -44,4 +44,16 @@ return {
       })
     end,
   },
+
+  -- fzf-lua UI: match arbareus (tall window, vertical preview at bottom).
+  {
+    "ibhagwan/fzf-lua",
+    opts = {
+      winopts = {
+        width   = 0.85,
+        height  = 0.80,
+        preview = { layout = "vertical", vertical = "down:45%" },
+      },
+    },
+  },
 }

@@ -28,6 +28,7 @@ map("n", "<A-4>", "<cmd>Trouble diagnostics toggle<cr>", { desc = "Problems" })
 map("n", "<A-7>", "<cmd>AerialToggle<CR>", { desc = "Structure (outline)" })
 map("n", "<C-S-n>", "<cmd>FzfLua files<CR>", { desc = "Go to File (Ctrl+Shift+N)" })
 map("n", "<C-S-f>", "<cmd>FzfLua live_grep<CR>", { desc = "Find in Path (Ctrl+Shift+F)" })
+map("x", "<C-S-f>", "<cmd>FzfLua grep_visual<CR>", { desc = "Grep Selection (Ctrl+Shift+F)" })
 
 -- Cheatsheet: open in a floating window
 map("n", "<leader>?", function()
