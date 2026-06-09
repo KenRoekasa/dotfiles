@@ -23,7 +23,7 @@ config.window_padding = { left = 4, right = 4, top = 4, bottom = 4 }
 -- Keys: pane splitting and navigation (mirrors vim-tmux-navigator)
 local act = wezterm.action
 
-config.leader = { key = "a", mods = "CTRL", timeout_milliseconds = 1000 }
+config.leader = { key = "Space", mods = "CTRL", timeout_milliseconds = 1000 }
 
 config.keys = {
   -- Pass Ctrl+Shift+F through to nvim (live grep).

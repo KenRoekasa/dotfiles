@@ -9,12 +9,12 @@
 ### WezTerm
 | Key | Action |
 |-----|--------|
-| `Ctrl+b c` | New tab |
-| `Ctrl+b %` | Split vertical |
-| `Ctrl+b "` | Split horizontal |
-| `Ctrl+b h/j/k/l` | Navigate panes |
-| `Ctrl+b z` | Zoom pane (fullscreen toggle) |
-| `Ctrl+b Space` | Rotate panes |
+| `Ctrl+Space c` | New tab |
+| `Ctrl+Space %` | Split vertical |
+| `Ctrl+Space "` | Split horizontal |
+| `Ctrl+Space h/j/k/l` | Navigate panes |
+| `Ctrl+Space z` | Zoom pane (fullscreen toggle) |
+| `Ctrl+Space Space` | Rotate panes |
 
 ### Navigation
 | Key | Action |
@@ -84,35 +84,35 @@
 
 ---
 
-## WezTerm (Leader = `Ctrl+b`)
+## WezTerm (Leader = `Ctrl+Space`)
 
 ### Panes
 | Key | Action |
 |-----|--------|
-| `Ctrl+b %` | Split pane vertically |
-| `Ctrl+b "` | Split pane horizontally |
-| `Ctrl+b h/j/k/l` | Navigate panes |
-| `Ctrl+b ←↑↓→` | Navigate panes |
-| `Ctrl+b Ctrl+←↑↓→` | Resize panes |
-| `Ctrl+b z` | Zoom/unzoom pane (fullscreen) |
-| `Ctrl+b Space` | Rotate panes |
-| `Ctrl+b x` | Close pane |
+| `Ctrl+Space %` | Split pane vertically |
+| `Ctrl+Space "` | Split pane horizontally |
+| `Ctrl+Space h/j/k/l` | Navigate panes |
+| `Ctrl+Space ←↑↓→` | Navigate panes |
+| `Ctrl+Space Ctrl+←↑↓→` | Resize panes |
+| `Ctrl+Space z` | Zoom/unzoom pane (fullscreen) |
+| `Ctrl+Space Space` | Rotate panes |
+| `Ctrl+Space x` | Close pane |
 
 ### Tabs
 | Key | Action |
 |-----|--------|
-| `Ctrl+b c` | New tab |
-| `Ctrl+b n/p` | Next/prev tab |
-| `Ctrl+b 1-9` | Go to tab N |
-| `Ctrl+b &` | Close tab |
-| `Ctrl+b ,` | Rename tab |
-| `Ctrl+b w` | Tab navigator |
+| `Ctrl+Space c` | New tab |
+| `Ctrl+Space n/p` | Next/prev tab |
+| `Ctrl+Space 1-9` | Go to tab N |
+| `Ctrl+Space &` | Close tab |
+| `Ctrl+Space ,` | Rename tab |
+| `Ctrl+Space w` | Tab navigator |
 
 ### Misc
 | Key | Action |
 |-----|--------|
-| `Ctrl+b [` | Copy mode (scroll back) |
-| `Ctrl+b b` | Send Ctrl+b to app |
+| `Ctrl+Space [` | Copy mode (scroll back) |
+| `Ctrl+Space b` | Send Ctrl+b to app |
 
 ---
 
